@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block header %}
+<style>
+@import url('https://fonts.googleapis.com/css?family=Droid+Serif');
+</style>
+<link rel="stylesheet" href="{% static 'site/profile.css' %}">
+{% endblock %}
+
+
+{% block content %}
+
+<div class="col-md-3 content-holder profile-left-sidebar">
+    <div class="avatar-circle">
+    </div>
+
+    {% for i in profile %}
+
+      <div class="profile-username">
+        {{i.user}}
+      </div>
+      <div class="profile-message">
+        {{i.msg}}
+      </div>
+
+    {% endfor %}
+
+
+</div>
+<div class="col-md-9">
+  HELLO
+</div>
+
+
+{% endblock %}

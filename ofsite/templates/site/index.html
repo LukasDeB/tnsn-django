@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% block navigation %}
+  {% if form.errors %}
+
+    <p>Yo</p>
+
+  {% endif %}
+
+  {% if user.is_authenticated %}
+    <ul class="nav navbar-nav navbar-right">
+      <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+           aria-haspopup="true" aria-expanded="false">{{user.username}}<span class="caret"></span></a>
+           <ul class="dropdown-menu">
+             <li><a href="/logout">Logout</a></li>
+           </ul>
+      </li>
+    </ul>
+  {% else %}
+    <form class="navbar-form navbar-right" action="{% url 'account_login' %}" method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <input name="username" type="text" class="form-control" placeholder="Username">
+        <input name="password" type="password" class="form-control" placeholder="Password">
+      </div>
+      <button type="submit" name="button" class="btn btn-primary"> Login </button>
+    </form>
+  {% endif %}
+
+
+{% endblock %}
+
+{% block content %}
+
+   {% if user.is_authenticated %}
+      <div class="col-md-9 content-holder">
+        <div class="new-post text-center">
+          <form class="new-post-form" action="/post/" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+              <textarea name="content" rows="8" cols="80" placeholder="What do you want to share now?"></textarea>
+            </div>
+            <button class="btn btn-primary text-center" type="submit" name="button">Send</button>
+          </form>
+        </div>
+        {% for post in news_feed %}
+            <div class="s-post">
+              <div class="post-header">
+                  <div class="author-avatar"></div>
+                  <div class="post-details">
+                    <a href="/profile/{{post.author}}">{{post.author}}</a>
+                    <a href="/post/{{post.pk}}/comments" class="text-muted">{{post.created_at}}</a>
+
+                  </div>
+
+                  <a href="#" class="post-options"><span class="caret"></span></a>
+              </div>
+                <p>{{post.content}}</p>
+              <div class="comment-section">
+                <a href="#">Comments <span class="caret"></span></a>
+              </div>
+            </div>
+          {% endfor %}
+    </div>
+    <div class="col-md-3">
+      <nav class="navbar navbar-default right-menu" role="navigation">
+          <ul class="nav sidebar-nav text-center">
+            {% for friend in friends %}
+            <li><a href="/profile/{{friend.username}}">{{friend.username}}</a></li>
+            {% endfor %}
+          </ul>
+      </nav>
+    </div>
+   {% endif %}
+   {% if not user.is_authenticated %}
+   <div class="col-md-6">
+
+
+      <div class="col-md-9 content-holder">
+        <h1>Sign Up</h1>
+
+        <p>Already have an account? Then please <a href="{{ login_url }}">sign in</a>.</p>
+
+        <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input name="email" type="email" class="form-control" id="email_form" placeholder="Email..." required>
+        </div>
+        <div class="form-group">
+          <label for="id_username">Username</label>
+          <input name="username" type="text" class="form-control" id="id_username" placeholder="Username..." required>
+        </div>
+        <div class="form-group">
+          <label for="id_password1">Password</label>
+          <input name="password1" type="password" class="form-control" id="id_password1" placeholder="Enter Password..." required>
+        </div>
+        <div class="form-group">
+          <label for="id_password2">Password Confirmation</label>
+          <input name="password2" type="password" class="form-control" id="id_password2" placeholder="Enter Password Confirmation..." required>
+        </div>
+
+        <button type="submit" name="signup" class="btn btn-primary">SignUp</button>
+
+        </form>
+      </div>
+    </div>
+   {% endif %}
+
+{% endblock %}

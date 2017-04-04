@@ -1,0 +1,42 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Framework</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'site/style.css' %}">
+    {% block header %}
+    {% endblock %}
+  </head>
+  <body>
+    <div class="navbar navbar-default nav-custom">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a href="/" class="navbar-brand">TNSN</a>
+        </div>
+        {% block navigation %}
+        {% endblock %}
+      </div>
+    </div>
+    <div class="container">
+      <div class="row main-container">
+
+          {% block content %}
+          {% endblock %}
+       </div>
+    </div>
+      <footer class="footer">
+        <div class="container">
+          <p class="text-muted">This should be the footer</p>
+        </div>
+      </footer>
+
+    </div>
+  </body>
+  <script  src="https://code.jquery.com/jquery-3.2.1.min.js"  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+  crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <script type="text/javascript" src="{% static 'site/js/core.js'%}"></script>
+</html>
